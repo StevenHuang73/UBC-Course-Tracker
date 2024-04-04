@@ -10,15 +10,15 @@ def Course_Monitor():
 
   driver = webdriver.Chrome()
 
-  course0 = Course("CPSC", "110", "101")
-  course1 = Course("WRDS", "150B", "931")
-  course2 = Course("WRDS", "150B", "921")
-  courses = {course0, course1, course2}
+  course1 = Course("MICB", "211", "921")
+  course2 = Course("BIOL", "260", "951")
+  courses = {course1, course2}
 
-  discord =   Discord(url="https://discord.com/api/webhooks/1129058997136265327/QBWgQGG63jOZ4oUwkzHfkUyYr8Eu73wvm15Yds5qkCtjuICfY60wJ1gH_BKgHAM-qXtp")
+  discord =  Discord(url="https://discord.com/api/webhooks/1225268898685915297/kYtw0-0XgNpGVSuTZEdJaKi72s15J-iq-cPEJodL2el0mFb6jOojglOpFdbvTRz0Fcco")
   for course in courses:
   
-    url = "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-section&dept="+course.dept+"&course="+course.number+"&section="+course.section
+    url = "https://courses.students.ubc.ca/cs/courseschedule?sesscd=S&pname=subjarea&tname=subj-section&sessyr=2024&course="+course.number+"&section="+course.section+"&dept=" +course.dept
+    print(url)
 
     driver.get(url)
     driver.implicitly_wait(5)
@@ -27,7 +27,10 @@ def Course_Monitor():
     seats = int(text)
 
     if seats > 0:
-      discord.post(content = course.dept + " " + course.number + " " + course.section + " has " + str(seats) + " seats open.")
+      discord.post(content = "@everyone" + course.dept + " " + course.number + " " + course.section + " has " + str(seats) + " seats open.")
+    else:
+      discord.post(content = course.dept + " " + course.number + " " + course.section + " has 0 seats open.")
+
 
 
 
